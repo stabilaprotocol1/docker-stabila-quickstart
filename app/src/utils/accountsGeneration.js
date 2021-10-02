@@ -8,8 +8,8 @@ const config = require('../config')
 
 const isDev = process.platform === 'darwin'
 
-const tronWebBuilder = require('../utils/tronWebBuilder')
-let tronWeb
+const stabilaWebBuilder = require('../utils/stabilaWebBuilder')
+let stabilaWeb
 let count = 1
 let done = false
 let defSet = false
@@ -38,13 +38,13 @@ async function accountsGeneration(options) {
   }
 
   if (!defSet) {
-    tronWeb = tronWebBuilder()
-    tronWeb.setDefaultBlock('latest')
+    stabilaWeb = stabilaWebBuilder()
+    stabilaWeb.setDefaultBlock('latest')
     setTimeout(waiting, 1000)
     defSet = true
   }
 
-  if (!await tronWeb.fullNode.isConnected()) {
+  if (!await stabilaWeb.fullNode.isConnected()) {
     await wait(1)
     return await accountsGeneration()
   }

@@ -8,7 +8,7 @@ const utils = require("ethereumjs-util")
 const seedrandom = require("seedrandom")
 const bip39 = require("bip39")
 const hdkey = require("ethereumjs-wallet/hdkey")
-const tronWebBuilder = require('../utils/tronWebBuilder')
+const stabilaWebBuilder = require('../utils/stabilaWebBuilder')
 const config = require('../config')
 
 function toHex(val) {
@@ -76,7 +76,7 @@ async function deriveAccountsFromSeedAndOrMnemonic(options) {
     }
   }
 
-  const tronWeb = tronWebBuilder()
+  const stabilaWeb = stabilaWebBuilder()
 
   const total_accounts = options.accounts
 
@@ -98,7 +98,7 @@ async function deriveAccountsFromSeedAndOrMnemonic(options) {
     let acct = wallet.derivePath(hdPath + i)
     let privateKey = acct.getWallet().getPrivateKey().toString('hex')
     if (!i && options.useDefaultPrivateKey) {
-      privateKey = tronWeb.defaultPrivateKey
+      privateKey = stabilaWeb.defaultPrivateKey
     }
     privateKeys.push(privateKey)
   }

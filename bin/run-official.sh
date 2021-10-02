@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [[ $(docker inspect tron | grep NetworkSettings) != "" ]]; then
-  docker rm -f tron
+if [[ $(docker inspect stabila | grep NetworkSettings) != "" ]]; then
+  docker rm -f stabila
 fi
 
 docker run -it --rm \
@@ -10,5 +10,5 @@ docker run -it --rm \
   -e "showQueryString=true" \
   -e "showBody=true" \
   -e "formatJson=true" \
-  --name tron \
-  trontools/quickstart:2.0.15
+  --name stabila \
+  stabilatools/quickstart:2.0.15

@@ -3,5 +3,5 @@
 docker run -it \
   --rm \
   -p 9090:9090 \
-  --name tron \
-  tronquickstart
+  --name stabila \
+  stabilaquickstart

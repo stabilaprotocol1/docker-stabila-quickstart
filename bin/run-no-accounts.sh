@@ -9,5 +9,5 @@ docker run -it \
   -e "formatJson=true" \
   -e "useDefaultPrivateKey=true" \
   -e "accounts=1" \
-  --name tron \
-  tronquickstart
+  --name stabila \
+  stabilaquickstart

@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+const stabilaWebBuilder = require('./app/src/utils/stabilaWebBuilder')
+global.stabilaWeb = stabilaWebBuilder()
+require('repl').start({})

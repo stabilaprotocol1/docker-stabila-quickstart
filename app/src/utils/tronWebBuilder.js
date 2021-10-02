@@ -1,11 +1,11 @@
-const TronWeb = require('tronweb')
+const StabilaWeb = require('stabilaweb')
 const network = require('../config').network
 
 let instance
 
 module.exports = function () {
   if (!instance) {
-    instance = new TronWeb(network)
+    instance = new StabilaWeb(network)
   }
   return instance
 }

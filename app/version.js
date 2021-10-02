@@ -1,5 +1,5 @@
 console.log(
     '\n\n------------------------------'
-    + '\n\nTron Quickstart v' + require('./package').version
+    + '\n\nStabila Quickstart v' + require('./package').version
     + '\n\n'
 )

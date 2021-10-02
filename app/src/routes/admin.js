@@ -5,7 +5,7 @@ const wait = require('../utils/wait')
 const _ = require('lodash')
 const accountsGeneration = require('../utils/accountsGeneration')
 
-const tronWebBuilder = require('../utils/tronWebBuilder')
+const stabilaWebBuilder = require('../utils/stabilaWebBuilder')
 const config = require('../config')
 
 let testingAccounts
@@ -20,20 +20,20 @@ function flatAccounts() {
 }
 
 async function getBalances() {
-  const tronWeb = tronWebBuilder()
+  const stabilaWeb = stabilaWebBuilder()
 
   const balances = []
   let k = 0
   let privateKeys = flatAccounts()
 
   for (let i = 0; i < privateKeys.length; i++) {
-    let address = tronWeb.address.fromPrivateKey(privateKeys[i])
-    balances[k++] = await tronWeb.trx.getBalance(address)
+    let address = stabilaWeb.address.fromPrivateKey(privateKeys[i])
+    balances[k++] = await stabilaWeb.stb.getBalance(address)
   }
   return Promise.resolve(balances)
 }
 
-let trxSent = {}
+let stbSent = {}
 
 
 async function verifyAccountsBalance(options) {
@@ -46,7 +46,7 @@ async function verifyAccountsBalance(options) {
     options = _.defaults(options, env)
   }
 
-  const tronWeb = tronWebBuilder()
+  const stabilaWeb = stabilaWebBuilder()
 
   console.log(chalk.gray("...\nLoading the accounts and waiting for the node to mine the transactions..."))
 
@@ -60,15 +60,15 @@ async function verifyAccountsBalance(options) {
   while (true) {
     console.log(chalk.gray(`(${count++}) Waiting for receipts...`))
     for (let i = 0; i < privateKeys.length; i++) {
-      let address = tronWeb.address.fromPrivateKey(privateKeys[i])
-      if (privateKeys[i] !== tronWeb.defaultPrivateKey && !trxSent[address]) {
-        let result = await tronWeb.trx.sendTransaction(address, tronWeb.toSun(amount))
+      let address = stabilaWeb.address.fromPrivateKey(privateKeys[i])
+      if (privateKeys[i] !== stabilaWeb.defaultPrivateKey && !stbSent[address]) {
+        let result = await stabilaWeb.stb.sendTransaction(address, stabilaWeb.toUnit(amount))
         if (result.result) {
-          console.log(chalk.gray(`Sending ${amount} TRX to ${address}`))
-          trxSent[address] = true
+          console.log(chalk.gray(`Sending ${amount} STB to ${address}`))
+          stbSent[address] = true
         }
       } else if (!balances[i]) {
-        let balance = await tronWeb.trx.getBalance(address)
+        let balance = await stabilaWeb.stb.getBalance(address)
         if (balance > 0) {
           balances[i] = balance
           ready++
@@ -84,15 +84,15 @@ async function verifyAccountsBalance(options) {
 }
 
 async function formatAccounts(balances, format) {
-  const tronWeb = tronWebBuilder()
+  const stabilaWeb = stabilaWebBuilder()
 
   const privateKeys = flatAccounts()
 
   formattedTestingAccounts = 'Available Accounts\n==================\n\n'
   for (let i = 0; i < privateKeys.length; i++) {
-    let address = tronWeb.address.fromPrivateKey(privateKeys[i])
+    let address = stabilaWeb.address.fromPrivateKey(privateKeys[i])
 
-    formattedTestingAccounts += `(${i}) ${format === 'hex' ? tronWeb.address.toHex(address) : address} (${tronWeb.fromSun(balances[i])} TRX)\n${format === 'all' ? '    ' + tronWeb.address.toHex(address) + '\n' : ''}`
+    formattedTestingAccounts += `(${i}) ${format === 'hex' ? stabilaWeb.address.toHex(address) : address} (${stabilaWeb.fromUnit(balances[i])} STB)\n${format === 'all' ? '    ' + stabilaWeb.address.toHex(address) + '\n' : ''}`
 
   }
 
@@ -175,7 +175,7 @@ router.get('/temporary-accounts-generation', async function (req, res) {
 })
 
 router.get('/', function (req, res) {
-  res.send('Welcome to Tron Quickstart ' + require('../../package').version)
+  res.send('Welcome to Stabila Quickstart ' + require('../../package').version)
 })
 
 
