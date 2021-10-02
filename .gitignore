@@ -1,0 +1,9 @@
+node_modules
+scripts/deploy_stabila.sh
+/tmp
+/stabila-data
+output-directory/
+jdk1.8.0_301/
+logs/
+/jre
+.env
